@@ -18,7 +18,7 @@ class ConfidenceBuilderConversation(Conversation):
             rating = str(opponent.rating) if opponent.rating is not None else "?"
             msg = (
                 f"{opponent.name} ({rating}) | "
-                f"{self.game.time_str()} {self.game.perf_name} | "
+                f"{self.game.time_control()} {self.game.perf_name} | "
                 f"{self.game.url()}"
             )
             subprocess.Popen([_NOTIFY_SCRIPT, msg],
