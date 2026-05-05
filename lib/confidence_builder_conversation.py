@@ -1,12 +1,21 @@
 """Custom conversation handler for Confidence Builder."""
+import subprocess
 from lib.conversation import Conversation, ChatLine
 
 _HELP = (
     "Commands: !wait (delay my first move), !name, !eval (spectators/self only), !queue, !who, !about"
 )
 
+_NOTIFY_SCRIPT = "/home/evan/projects/chess_engine/notify_human_game.sh"
+
 
 class ConfidenceBuilderConversation(Conversation):
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        if not self.game.opponent.is_bot:
+            subprocess.Popen([_NOTIFY_SCRIPT, self.game.url()],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def command(self, line: ChatLine, cmd: str) -> None:
         if cmd in ("commands", "help"):
