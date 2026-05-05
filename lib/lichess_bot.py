@@ -26,7 +26,7 @@ import importlib.metadata
 import contextlib
 from lib.blocklist import OnlineBlocklist
 from lib.config import load_config, Configuration, log_config
-from lib.conversation import ChatLine
+from lib.conversation import Conversation, ChatLine
 from lib.confidence_builder_conversation import ConfidenceBuilderConversation
 from lib.timer import Timer, seconds, msec, hours, to_seconds
 from lib.lichess import stop
