@@ -26,7 +26,8 @@ import importlib.metadata
 import contextlib
 from lib.blocklist import OnlineBlocklist
 from lib.config import load_config, Configuration, log_config
-from lib.conversation import Conversation, ChatLine
+from lib.conversation import ChatLine
+from lib.confidence_builder_conversation import ConfidenceBuilderConversation
 from lib.timer import Timer, seconds, msec, hours, to_seconds
 from lib.lichess import stop
 from lib.lichess_types import (UserProfileType, EventType, GameType, GameEventType, CONTROL_QUEUE_TYPE,
@@ -681,7 +682,7 @@ def play_game(li: lichess.Lichess,
         with engine_wrapper.create_engine(config, game) as engine:
             engine.get_opponent_info(game)
             logger.debug(f"The engine for game {game_id} has pid={engine.get_pid()}")
-            conversation = Conversation(game, engine, li, __version__, challenge_queue)
+            conversation = ConfidenceBuilderConversation(game, engine, li, __version__, challenge_queue)
 
             logger.info(f"+++ {game}")
 
