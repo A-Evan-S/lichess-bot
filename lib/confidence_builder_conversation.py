@@ -14,7 +14,14 @@ class ConfidenceBuilderConversation(Conversation):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         if not self.game.opponent.is_bot:
-            subprocess.Popen([_NOTIFY_SCRIPT, self.game.url()],
+            opponent = self.game.opponent
+            rating = str(opponent.rating) if opponent.rating is not None else "?"
+            msg = (
+                f"{opponent.name} ({rating}) | "
+                f"{self.game.time_str()} {self.game.perf_name} | "
+                f"{self.game.url()}"
+            )
+            subprocess.Popen([_NOTIFY_SCRIPT, msg],
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def command(self, line: ChatLine, cmd: str) -> None:
